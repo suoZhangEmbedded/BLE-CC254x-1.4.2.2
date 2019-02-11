@@ -79,6 +79,10 @@
 
 #include "simpleBLEPeripheral.h"
 
+#include "npi.h"
+
+#include "stdio.h"
+
 #if defined FEATURE_OAD
   #include "oad.h"
   #include "oad_target.h"
@@ -261,6 +265,13 @@ static simpleProfileCBs_t simpleBLEPeripheral_SimpleProfileCBs =
 {
   simpleProfileChangeCB    // Charactersitic value change callback
 };
+
+static void npi_serial_callback( uint8 port, uint8 events )
+{/* 串口接收回调函数 */
+    (void)port;//加个 (void)，是未了避免编译告警，明确告诉缓冲区不用理会这个变量
+
+}
+
 /*********************************************************************
  * PUBLIC FUNCTIONS
  */
@@ -476,6 +487,13 @@ uint16 SimpleBLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
 
     // Start Bond Manager
     VOID GAPBondMgr_Register( &simpleBLEPeripheral_BondMgrCBs );
+    
+    {/* 初始化串口，所长，2019年2月11日16:20:21 */
+      
+        NPI_InitTransport( npi_serial_callback );
+    
+        printf("ble rebooting.\r\n");
+    }
 
     // Set timer for first periodic event
     osal_start_timerEx( simpleBLEPeripheral_TaskID, SBP_PERIODIC_EVT, SBP_PERIODIC_EVT_PERIOD );
@@ -799,6 +817,8 @@ static void performPeriodicTask( void )
 {
   uint8 valueToCopy;
   uint8 stat;
+  
+  printf("ble performPeriodicTask.\r\n");
 
   // Call to retrieve the value of the third characteristic in the profile
   stat = SimpleProfile_GetParameter( SIMPLEPROFILE_CHAR3, &valueToCopy);

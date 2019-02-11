@@ -85,6 +85,17 @@
  * FUNCTIONS
  */
 
+//printf 重定向，2017年4月28日09:52:29，所长
+__near_func int putchar(int ch)
+{
+
+  uint8 i = (uint8)ch;
+  
+  NPI_WriteTransport(&i,1);
+  
+  return i; 
+}
+
 /*******************************************************************************
  * @fn          NPI_InitTransport
  *

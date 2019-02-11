@@ -94,7 +94,7 @@ extern "C"
 #endif //Endif for NPI_UART_PORT
 
 #if !defined( NPI_UART_FC )
-#define NPI_UART_FC                    TRUE
+#define NPI_UART_FC                    FALSE//所长，关闭流控
 #endif // !NPI_UART_FC
 
 #define NPI_UART_FC_THRESHOLD          48

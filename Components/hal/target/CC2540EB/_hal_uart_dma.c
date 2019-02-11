@@ -201,7 +201,7 @@
 
 #if !defined( DMA_PM )
 #if defined POWER_SAVING
-#define DMA_PM                     1
+#define DMA_PM                     0//低功耗状态下关闭DMA管理，所长
 #else
 #define DMA_PM                     0
 #endif // POWER_SAVING
