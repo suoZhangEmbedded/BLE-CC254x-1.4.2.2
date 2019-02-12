@@ -818,7 +818,9 @@ static void performPeriodicTask( void )
   uint8 valueToCopy;
   uint8 stat;
   
-  printf("ble performPeriodicTask.\r\n");
+  uint16 tick = osal_GetSystemClock()/1000;
+  
+  printf( "ble tick %u s.\r\n", tick );
 
   // Call to retrieve the value of the third characteristic in the profile
   stat = SimpleProfile_GetParameter( SIMPLEPROFILE_CHAR3, &valueToCopy);

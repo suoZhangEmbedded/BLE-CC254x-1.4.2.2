@@ -62,6 +62,8 @@
 
 #include "simpleGATTprofile.h"
 
+#include "stdio.h"
+
 /*********************************************************************
  * MACROS
  */
@@ -656,6 +658,14 @@ static bStatus_t simpleProfile_WriteAttrCB( uint16 connHandle, gattAttribute_t *
 {
   bStatus_t status = SUCCESS;
   uint8 notifyApp = 0xFF;
+  
+  printf( "len:%d.\r\n", len );
+  
+  for( uint8 i=0; i<len; i++ )
+  {
+    printf( "0x%2X ", *(pValue+i) );
+  
+  }
   
   // If attribute permissions require authorization to write, return error
   if ( gattPermitAuthorWrite( pAttr->permissions ) )
